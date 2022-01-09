@@ -1,0 +1,38 @@
+﻿<Window x:Class="SpelGalgje.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpelGalgje"
+        mc:Ignorable="d"
+        Title="Galgje Spel" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0"  Grid.Row="3" Grid.ColumnSpan="2">
+            <Button Name="btnStartSpel" Content="Start spel" HorizontalAlignment="Left" Width="100" Height="50" Margin="5" Click="btnStartSpel_Click" />
+            <Button Name="btnRaadWoord" Content="Raad woord" Visibility="Hidden" HorizontalAlignment="Center" Width="100" Height="50" Margin="5" Click="btnRaadWoord_Click" />
+            <Button Name="btnNieuwSpel" Content="Nieuw spel" HorizontalAlignment="Right" Width="100" Height="50" Margin="5" Click="btnNieuwSpel_Click"/>
+        </StackPanel>
+
+        <Viewbox >
+            <Label Content="GALGJE SPEL" Margin="10"/>
+        </Viewbox>
+        <Label Name="lblMain" Grid.Row="1" Grid.ColumnSpan="2" FontSize="20" Margin="5" Content=""/>
+        <Label Name="lblLevens" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Width="100" Height="50"/>
+        <TextBox Name="txbGeheimWoord" Grid.Row="2" Grid.ColumnSpan="2"  HorizontalAlignment="Center" VerticalAlignment="Top"
+                 FontSize="20" Height="30" Width="300" HorizontalContentAlignment="Left" FontFamily="Gill Sans Nova Ultra Bold"></TextBox>
+        
+    </Grid>
+</Window>
