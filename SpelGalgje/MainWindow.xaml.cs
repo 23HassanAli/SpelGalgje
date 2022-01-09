@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,11 +23,9 @@ namespace SpelGalgje
     public partial class MainWindow : Window
     {
        
-       private string geheimWoord;
-       private int levensBegin = 10;
-       private string juist;
-       private string fout;
-       private int imgIndex = 0;
+        private string geheimWoord;
+        private int levensBegin = 10;
+        private int imgIndex = 0;
         private string[] GalgImg = new string[]
        
         {
@@ -49,33 +48,38 @@ namespace SpelGalgje
         //        new BitmapImage(new Uri(@"/Images/galg9.png", UriKind.Relative)),
         //        new BitmapImage(new Uri(@"/Images/galg10.png", UriKind.Relative)),
         //    };
-
-        //private bool isJuist = false;
+        private string[] galgjeWoorden = new string[]
+      {
+             "grafeem","tjiftjaf", "maquette","kitsch","pochet","convocaat","jakkeren", "collaps","zuivel","cesium","voyant","spitten","pancake","gietlepel","karwats",
+            "dehydreren","viswijf","flater","cretonne","sennhut","tichel","wijten","cadeau","trotyl","chopper","pielen","vigeren","vrijuit","dimorf","kolchoz","janhen",
+             "plexus","borium","ontweien","quiche","ijverig","mecenaat","falset","telexen","hieruit","femelaar","cohesie","exogeen","plebejer","opbouw","zodiak","volder",
+            "vrezen","convex","verzenden","ijstijd","fetisj","gerekt","necrose","conclaaf","clipper","poppetjes","looikuip","hinten","inbreng", "arbitraal","dewijl",
+            "kapzaag", "welletjes",  "bissen", "catgut", "oxymoron","heerschaar","ureter", "kijkbuis","dryade","grofweg", "laudanum","excitatie", "revolte", "heugel",
+            "geroerd", "hierbij","glazig","pussen", "liquide", "aquarium", "formol","kwelder","zwager", "vuldop", "halfaap", "hansop", "windvaan", "bewogen", "vulstuk",
+            "efemeer", "decisief","omslag","prairie","schuit","weivlies", "ontzeggen","schijn","sousafoon"
+      };
         public MainWindow()
         {
             InitializeComponent();
             StringBuilder stringbuilder = new StringBuilder();
-            stringbuilder.AppendLine("Geef een woord in");
+            stringbuilder.AppendLine("");
           
             lblMain.Content = stringbuilder.ToString();
-           
+
+            string spelerNaam = Interaction.InputBox("Geef je naam in", "Speler", "Naam", 100, 100);
+            while (string.IsNullOrEmpty(spelerNaam)) // Cancel, Sluiten of lege string
+            {
+                MessageBox.Show("Geef je naam in", " Foutieve invoer");
+                spelerNaam = Interaction.InputBox("Geef je naam in", "Invoer", "Naam", 100, 100);
+            };
+            
         }
-        
         private void btnStartSpel_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder stringbuilder = new StringBuilder();
             btnStartSpel.Visibility = Visibility.Hidden;
             btnRaadWoord.Visibility = Visibility.Visible;
-           
-            if(String.IsNullOrEmpty(txbGeheimWoord.Text))
-            {
-                MessageBox.Show("Geen woord opgeslagen");
-                return;
-            }
-            else
-            {
-                geheimWoord = txbGeheimWoord.Text;
-            }
+            WoordSelector(galgjeWoorden);
             
             txbGeheimWoord.Text = "";
 
@@ -110,11 +114,9 @@ namespace SpelGalgje
         private void LetterCheck()
         {
             StringBuilder stringbuilder = new StringBuilder();
-
-        
-
             string letters = txbGeheimWoord.Text;
-           
+            string juist = " ";
+            string fout = " ";
             if (geheimWoord.Contains(letters))
             {
                     juist += letters;
@@ -146,18 +148,13 @@ namespace SpelGalgje
                 lblMain.Content = "😔 Probeer opnieuw";
 
             }
-
-          
-            
             stringbuilder.AppendLine("Juiste letters: " + juist).AppendLine("Foute letters: " + fout);
-
         }
         private void Timer()
         {
             dispatchertimer.Interval = TimeSpan.FromSeconds(1);
             dispatchertimer.Tick += Dispatchertimer_Tick;
-            dispatchertimer.Start();
-            
+            dispatchertimer.Start();      
         }
 
         private void Dispatchertimer_Tick(object sender, EventArgs e)
@@ -180,9 +177,26 @@ namespace SpelGalgje
             }
 
             lblLevens.Content = levensBegin;
-
+            if(levensBegin < 3)
+            {
+                grid.Background = new SolidColorBrush(Colors.Red);
+            }
+            else
+            {
+                grid.Background = new SolidColorBrush(Colors.MediumPurple);
+            }
         }
+        private string WoordSelector(string[] lijst)
+        {
+            Random random = new Random();
+            for(int i = 0; i < lijst.Length; i++)
+            {
+                int index = random.Next(0,lijst.Length);
+                geheimWoord = lijst[index];
 
+            }
+            return geheimWoord;
+        }
         private void btnNieuwSpel_MouseEnter(object sender, MouseEventArgs e)
         {
             grid.Background = new SolidColorBrush(Colors.Chocolate);
@@ -202,6 +216,46 @@ namespace SpelGalgje
         private void btnStartSpel_MouseLeave(object sender, MouseEventArgs e)
         {
             btnStartSpel.Background = Brushes.Yellow;
+        }
+
+        private void MIAfsluiten_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        //Tijdstip 
+        DispatcherTimer timer = new DispatcherTimer();
+
+        public object MessageBoxButtons { get; }
+
+        private void NieuweTijdStip()
+        {
+            timer.Interval =  new TimeSpan(00,00,00);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void MIHint_Click(object sender, RoutedEventArgs e)
+        {
+            Random random = new Random();
+            const string chars = "abcdefghijklmnopqrstuvwxyz";
+            char hintLetter = ' ';
+            for(int i = 0; i < 2; i++)
+            {
+                if (geheimWoord != chars)
+                {
+                    int index = random.Next(0, chars.Length);
+                    hintLetter = chars[index];  
+                }
+                
+            }
+            MessageBox.Show(hintLetter.ToString(),"Hint");
+
         }
     }
 }
