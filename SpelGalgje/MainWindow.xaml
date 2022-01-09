@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SpelGalgje"
         mc:Ignorable="d"
         Title="Galgje Spel" Height="450" Width="800">
-    <Grid>
+    <Grid Background="MediumPurple" Name="grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
@@ -21,18 +21,37 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0"  Grid.Row="3" Grid.ColumnSpan="2">
-            <Button Name="btnStartSpel" Content="Start spel" HorizontalAlignment="Left" Width="100" Height="50" Margin="5" Click="btnStartSpel_Click" />
-            <Button Name="btnRaadWoord" Content="Raad woord" Visibility="Hidden" HorizontalAlignment="Center" Width="100" Height="50" Margin="5" Click="btnRaadWoord_Click" />
-            <Button Name="btnNieuwSpel" Content="Nieuw spel" HorizontalAlignment="Right" Width="100" Height="50" Margin="5" Click="btnNieuwSpel_Click"/>
+            <Button Name="btnStartSpel" Content="Start spel" HorizontalAlignment="Left" Width="100" Height="50" 
+                    Margin="5" Click="btnStartSpel_Click" FontFamily="Gill Sans Nova Ultra Bold" 
+                    Background="Orange" Focusable="False" MouseEnter="btnStartSpel_MouseEnter" MouseLeave="btnStartSpel_MouseLeave"/>
+            <Button Name="btnRaadWoord" Content="Raad woord" Visibility="Hidden" HorizontalAlignment="Center" Width="100" Height="50" Margin="5" 
+                   Background="Green" Click="btnRaadWoord_Click" FontFamily="Gill Sans Ultra Bold" />
         </StackPanel>
 
-        <Viewbox >
-            <Label Content="GALGJE SPEL" Margin="10"/>
+        <Viewbox Grid.Column="1" >
+            <Label Content="GALGJE SPEL" Margin="10" FontFamily="Gill Sans Nova Cond Ultra Bold"/>
         </Viewbox>
-        <Label Name="lblMain" Grid.Row="1" Grid.ColumnSpan="2" FontSize="20" Margin="5" Content=""/>
-        <Label Name="lblLevens" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Width="100" Height="50"/>
+        <Label Name="lblMain" Grid.Row="1" Grid.ColumnSpan="2" FontSize="20" Margin="5" FontFamily="Gill Sans Nova Cond Ultra Bold"/>
+        <Label Name="lblLevens" Grid.Column="2"
+              FontFamily="Gill Sans Nova Ultra Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  FontSize="20"/>
         <TextBox Name="txbGeheimWoord" Grid.Row="2" Grid.ColumnSpan="2"  HorizontalAlignment="Center" VerticalAlignment="Top"
                  FontSize="20" Height="30" Width="300" HorizontalContentAlignment="Left" FontFamily="Gill Sans Nova Ultra Bold"></TextBox>
+        <Label Name="lblImgGalg" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="20" ></Label>
+        <Image Name="ImageBoxGalg" Grid.Column="3" Grid.Row="3" Grid.RowSpan="2"></Image>
+       
+        <Label Name="lblTimer" Grid.Column="3" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+
+        <StackPanel Grid.ColumnSpan="4">
+            <Menu FontSize="18" Background="Black" Foreground="White" >
+                <MenuItem Header="Afsluiten" Click="MIAfsluiten_Click"/>
+                <MenuItem Header="Highscores"/>
+                <MenuItem Header="Nieuw Spel"/>
+                <MenuItem Header="Hint" Click="MIHint_Click"/>
+                <MenuItem Header="Timer instellen"/>
+
+            </Menu>
+            
+        </StackPanel>
         
     </Grid>
 </Window>
