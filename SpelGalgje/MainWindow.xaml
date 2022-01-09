@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SpelGalgje"
         mc:Ignorable="d"
         Title="Galgje Spel" Height="450" Width="800">
-    <Grid>
+    <Grid Background="MediumPurple">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
@@ -21,16 +21,21 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0"  Grid.Row="3" Grid.ColumnSpan="2">
-            <Button Name="btnStartSpel" Content="Start spel" HorizontalAlignment="Left" Width="100" Height="50" Margin="5" Click="btnStartSpel_Click" />
-            <Button Name="btnRaadWoord" Content="Raad woord" Visibility="Hidden" HorizontalAlignment="Center" Width="100" Height="50" Margin="5" Click="btnRaadWoord_Click" />
-            <Button Name="btnNieuwSpel" Content="Nieuw spel" HorizontalAlignment="Right" Width="100" Height="50" Margin="5" Click="btnNieuwSpel_Click"/>
+            <Button Name="btnStartSpel" Content="Start spel" HorizontalAlignment="Left" Width="100" Height="50" 
+                    Margin="5" Click="btnStartSpel_Click" FontFamily="Gill Sans Nova Ultra Bold" 
+                    Background="Orange"/>
+            <Button Name="btnRaadWoord" Content="Raad woord" Visibility="Hidden" HorizontalAlignment="Center" Width="100" Height="50" Margin="5" 
+                   Background="Green" Click="btnRaadWoord_Click" FontFamily="Gill Sans Ultra Bold" />
+            <Button Name="btnNieuwSpel" Content="Nieuw spel" HorizontalAlignment="Right" Width="100" Height="50" 
+                   Background="Red" Margin="5" Click="btnNieuwSpel_Click" FontFamily="Gill Sans Nova Ultra Bold"/>
         </StackPanel>
 
         <Viewbox >
-            <Label Content="GALGJE SPEL" Margin="10"/>
+            <Label Content="GALGJE SPEL" Margin="10" FontFamily="Gill Sans Nova Cond Ultra Bold"/>
         </Viewbox>
-        <Label Name="lblMain" Grid.Row="1" Grid.ColumnSpan="2" FontSize="20" Margin="5" Content=""/>
-        <Label Name="lblLevens" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Width="100" Height="50"/>
+        <Label Name="lblMain" Grid.Row="1" Grid.ColumnSpan="2" FontSize="20" Margin="5" Content="" FontFamily="Gill Sans Nova Cond Ultra Bold"/>
+        <Label Name="lblLevens" Grid.Column="2"
+              FontFamily="Gill Sans Nova Ultra Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Width="100" Height="50"/>
         <TextBox Name="txbGeheimWoord" Grid.Row="2" Grid.ColumnSpan="2"  HorizontalAlignment="Center" VerticalAlignment="Top"
                  FontSize="20" Height="30" Width="300" HorizontalContentAlignment="Left" FontFamily="Gill Sans Nova Ultra Bold"></TextBox>
         

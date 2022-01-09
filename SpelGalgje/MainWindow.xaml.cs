@@ -20,10 +20,10 @@ namespace SpelGalgje
     /// </summary>
     public partial class MainWindow : Window
     {
-        string geheimWoord;
-        int levensBegin = 10;
-        string juist;
-        string fout;
+       private string geheimWoord;
+       private int levensBegin = 10;
+       private string juist;
+       private string fout;
         //private bool isJuist = false;
         public MainWindow()
         {
