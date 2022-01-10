@@ -44,10 +44,10 @@
         <StackPanel Grid.ColumnSpan="4">
             <Menu FontSize="18" Background="Black" Foreground="White" >
                 <MenuItem Header="Afsluiten" Click="MIAfsluiten_Click"/>
-                <MenuItem Header="Highscores"/>
+                <MenuItem Header="Highscores" Click="MenuItemHighScore_Click" />
                 <MenuItem Header="Nieuw Spel"/>
                 <MenuItem Header="Hint" Click="MIHint_Click"/>
-                <MenuItem Header="Timer instellen"/>
+                <MenuItem Header="Timer instellen" Click="MenuItemTimerInstellen_Click"/>
 
             </Menu>
             

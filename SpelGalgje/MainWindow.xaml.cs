@@ -17,24 +17,34 @@ using System.Windows.Threading;
 
 namespace SpelGalgje
 {
+    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-       
+        private DispatcherTimer dispatchertimer = new DispatcherTimer();
+        
         private string geheimWoord;
+
+        string spelerNaam;
+
         private int levensBegin = 10;
+        
         private int imgIndex = 0;
-        private string[] GalgImg = new string[]
-       
+        
+        private int timerIndex = 0;
+
+        /// <summary>
+        /// Ik probeer de foto's te laten te draaien met string list en bitmap image maar de foto's worden in de eerste instantie niet getoond.
+        /// </summary>
+        private string[] GalgImg = new string[] 
         {
             "/Images/galg1.png", "/Images/galg2.png", "/Images/galg3.png", "/Images/galg4.png",
             "/Images/galg5.png", "/Images/galg6.png", "/Images/galg7.png",
         "/Images/galg8.png", "/Images/galg9.png", "/Images/galg10.png",
         };
-        private DispatcherTimer dispatchertimer = new DispatcherTimer();
-        private int timerIndex = 0;
+     
         //private BitmapImage[] GalgImg = new BitmapImage[10]
         //     {
         //       new BitmapImage(new Uri(@"/Images/galg1.png", UriKind.Relative)),
@@ -48,6 +58,7 @@ namespace SpelGalgje
         //        new BitmapImage(new Uri(@"/Images/galg9.png", UriKind.Relative)),
         //        new BitmapImage(new Uri(@"/Images/galg10.png", UriKind.Relative)),
         //    };
+        
         private string[] galgjeWoorden = new string[]
       {
              "grafeem","tjiftjaf", "maquette","kitsch","pochet","convocaat","jakkeren", "collaps","zuivel","cesium","voyant","spitten","pancake","gietlepel","karwats",
@@ -66,51 +77,65 @@ namespace SpelGalgje
           
             lblMain.Content = stringbuilder.ToString();
 
-            string spelerNaam = Interaction.InputBox("Geef je naam in", "Speler", "Naam", 100, 100);
+           spelerNaam = Interaction.InputBox("Geef je naam in", "Speler", "Naam", 100, 100);
             while (string.IsNullOrEmpty(spelerNaam)) // Cancel, Sluiten of lege string
             {
-                MessageBox.Show("Geef je naam in", " Foutieve invoer");
+                MessageBox.Show("Geef je naam in", " Foutieve invoer"); //Hier als de vakje naam leeg is, wordt deze message box getoond 
                 spelerNaam = Interaction.InputBox("Geef je naam in", "Invoer", "Naam", 100, 100);
+              
+                
             };
             
+        }
+        private void AddSpelerNamen()
+        {
+            List<string> listSpelerNamen = new List<string>();
+            for(int i = 1; i < listSpelerNamen.Count; i++)
+            {
+                listSpelerNamen.Add(spelerNaam);
+            }
         }
         private void btnStartSpel_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder stringbuilder = new StringBuilder();
-            btnStartSpel.Visibility = Visibility.Hidden;
-            btnRaadWoord.Visibility = Visibility.Visible;
-            WoordSelector(galgjeWoorden);
+            btnStartSpel.Visibility = Visibility.Hidden; // button start spel verdwijnt
+            btnRaadWoord.Visibility = Visibility.Visible; // button raad woord wordt zichtbaar
+            WoordSelector(galgjeWoorden); // functie om een random woord in te kiezen  van de lijst galgjeWoorden
             
-            txbGeheimWoord.Text = "";
+            txbGeheimWoord.Text = ""; 
 
             stringbuilder.AppendLine("Juiste letters: ").AppendLine("Foute letters: ");
             lblMain.Content = stringbuilder.ToString();
             lblLevens.Content = levensBegin.ToString();
-            //het woord en start nieuw spel
+       
             Timer();
+            NieuweTijdStip();
 
         }
        
         private void btnNieuwSpel_Click(object sender, RoutedEventArgs e)
         {
-            levensBegin = 10;
+            levensBegin = 10; 
             lblMain.Content = "Geef een woord in";
             btnStartSpel.Visibility= Visibility.Visible;
             btnRaadWoord.Visibility= Visibility.Hidden;
             txbGeheimWoord.Text = "";
-            dispatchertimer.Stop();
+            dispatchertimer.Stop(); //dispatcher wordt stop gezet want die moet starten bij starten van het spel
             lblTimer.Content = " ";
 
            
         }
-
         private void btnRaadWoord_Click(object sender, RoutedEventArgs e)
         {
             LetterCheck();
             txbGeheimWoord.Text = "";
                            
         }
-
+        /// <summary>
+        /// In deze funcite wordt gecheckt of het geheimewoord de geraden letter bevat.
+        /// Bovendien als de speler de letters juist hebt, wordt het eind (gewonnen) bericht getoond en als niet dan eind (verloren) bericht
+        /// wordt getoond.
+        /// </summary>
         private void LetterCheck()
         {
             StringBuilder stringbuilder = new StringBuilder();
@@ -132,7 +157,7 @@ namespace SpelGalgje
             }
             else
             {
-                levensBegin--;
+                levensBegin--; 
                 
                 fout += letters;
 
@@ -186,6 +211,11 @@ namespace SpelGalgje
                 grid.Background = new SolidColorBrush(Colors.MediumPurple);
             }
         }
+        /// <summary>
+        /// In deze funtie wordt een random woord geselecteerd
+        /// </summary>
+        /// <param name="lijst"></param>
+        /// <returns> geeft als een woord string terug</returns>
         private string WoordSelector(string[] lijst)
         {
             Random random = new Random();
@@ -197,6 +227,8 @@ namespace SpelGalgje
             }
             return geheimWoord;
         }
+
+        //Alle event voor de buttons en menuitems
         private void btnNieuwSpel_MouseEnter(object sender, MouseEventArgs e)
         {
             grid.Background = new SolidColorBrush(Colors.Chocolate);
@@ -222,40 +254,54 @@ namespace SpelGalgje
         {
             Close();
         }
-
-        //Tijdstip 
-        DispatcherTimer timer = new DispatcherTimer();
-
-        public object MessageBoxButtons { get; }
-
-        private void NieuweTijdStip()
-        {
-            timer.Interval =  new TimeSpan(00,00,00);
-            timer.Tick += Timer_Tick;
-            timer.Start();
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            
-        }
-
         private void MIHint_Click(object sender, RoutedEventArgs e)
         {
             Random random = new Random();
             const string chars = "abcdefghijklmnopqrstuvwxyz";
             char hintLetter = ' ';
-            for(int i = 0; i < 2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 if (geheimWoord != chars)
                 {
                     int index = random.Next(0, chars.Length);
-                    hintLetter = chars[index];  
+                    hintLetter = chars[index];
                 }
-                
+
             }
-            MessageBox.Show(hintLetter.ToString(),"Hint");
+            MessageBox.Show(hintLetter.ToString(), "Hint");
 
         }
+
+        private void MenuItemHighScore_Click(object sender, RoutedEventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Player Naam:" + spelerNaam).AppendLine("Stip: " + timer2.ToString()).AppendLine("Levens: " + levensBegin);
+            MessageBox.Show(sb.ToString(), "Speler score");
+
+        }
+
+        private void MenuItemTimerInstellen_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(timer2.ToString());
+        }
+
+        //Tijdstip voor om huidige tijd te bekeken  
+        DispatcherTimer timer2 = new DispatcherTimer();
+
+        private void NieuweTijdStip()
+        {
+            timer2.Interval = new TimeSpan(00,00,00);
+            timer2.Tick += Timer_Tick;
+            timer2.Start();
+        }
+       
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+         
+            lblImgGalg.Content = $"{DateTime.Now.ToLongTimeString()}";
+
+        }
+
+       
     }
 }
